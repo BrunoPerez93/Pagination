@@ -1,11 +1,12 @@
 
 import './App.css'
+import PaginationTable from './components/PaginationTable/PaginationTable'
 
 function App() {
 
   return (
     <>
-   <p className='text-red-500 text-3xl'>Hola</p>
+      <PaginationTable />
     </>
   )
 }
