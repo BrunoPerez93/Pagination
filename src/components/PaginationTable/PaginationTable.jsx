@@ -6,18 +6,33 @@ const PaginationTable = () => {
 
   const [character, setCharacter] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchCharacters(currentPage);
   }, [currentPage]);
 
   const fetchCharacters = async (page) => {
-    const data = await getCharacters(page);
-    setCharacter(data);
+    let nextPage = page;
+    let data;
+    do {
+      data = await getCharacters(nextPage);
+      if (data.results.length === 0 && data.info.prev !== null) {
+        nextPage++;
+      } else {
+        setCharacter(data);
+        setTotalPages(data.info ? data.info.pages : 1);
+      }
+    } while (data.results.length === 0 && nextPage <= totalPages);
+    setCurrentPage(nextPage);
   }
 
   const handlePageClick = (page) => {
-    setCurrentPage(page);
+    if (page === 0 && currentPage === 1) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(page);
+    }
   }
 
   const renderCharacterRows = () => {
@@ -31,7 +46,7 @@ const PaginationTable = () => {
           <td>{item.species}</td>
           <td>{item.gender}</td>
         </tr>
-      )).slice((currentPage - 1) * 5, currentPage * 5);
+      ))
     }
     return null;
   }
@@ -56,7 +71,7 @@ const PaginationTable = () => {
       <div className="my-5 flex justify-center items-center">
 
         <ButtonComponent disabled={currentPage === 1} onClick={() => handlePageClick(currentPage - 1)} title='Previous' />
-        <span className='text-sky-950 font-bold'>Page {currentPage}</span>
+        <span className='text-sky-950 font-bold'>Page {currentPage} of {totalPages}</span>
         <ButtonComponent disabled={currentPage === (character.info ? character.info.pages : 1)}
           onClick={() => handlePageClick(currentPage + 1)} title='Next' />
 
