@@ -44,12 +44,12 @@ const PaginationTable = () => {
     if (character.results) {
       return character.results.map((item) => (
         <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
-          <td className='w-1/3'>
+          <td className='w-[300px]'>
             <img src={item.image} alt='foto' />
           </td>
-          <td>{item.name}</td>
-          <td>{item.species}</td>
-          <td>{item.gender}</td>
+          <td className='text-wrap w-1/4 p-2 text-xs md:text-2xl'>{item.name}</td>
+          <td className='p-2 text-xs md:text-2xl'>{item.species}</td>
+          <td className='p-2 text-xs md:text-2xl'>{item.gender}</td>
         </tr>
       ))
     }
@@ -58,15 +58,15 @@ const PaginationTable = () => {
 
   return (
 
-    <div className='p-5 bg-gray-500 font-bold flex flex-col justify-center items-center'>
+    <div className='p-5 bg-gray-500 flex flex-col justify-center items-center'>
 
       <table className="text-lg text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xl text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th className='p-2'>Image</th>
-            <th className='p-2'>Name</th>
-            <th className='p-2'>Species</th>
-            <th className='p-2'>Gender</th>
+          <tr className='text-sm font-bold md:text-2xl'>
+            <th className='p-2 text-xs md:text-2xl'>Image</th>
+            <th className='p-2 text-xs md:text-2xl'>Name</th>
+            <th className='p-2 text-xs md:text-2xl'>Species</th>
+            <th className='p-2 text-xs md:text-2xl'>Gender</th>
           </tr>
         </thead>
         <tbody>
